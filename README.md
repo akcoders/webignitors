@@ -1,6 +1,6 @@
 # WebIgnitors
 
-A ten-page creative agency website built with Laravel 13, Bootstrap 5, and MySQL. It covers web development, iOS and Android applications, digital marketing, and AI integration.
+A ten-page creative agency website built with Laravel 13, Bootstrap 5, and MySQL. It covers specialist eCommerce, ERP, CRM, HRM, complex web applications, iOS and Android products, digital marketing, and AI-powered business automation.
 
 The interface uses a custom art direction system with layered parallax scenes, kinetic typography, interactive 3D cards, magnetic calls to action, scroll reveals, and reduced-motion support. Every page is designed for desktop, tablet, and mobile.
 

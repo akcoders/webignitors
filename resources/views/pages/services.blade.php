@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('title', 'Services')
-@section('meta_description', 'Explore WebIgnitors services across web development, iOS and Android apps, digital marketing, and practical AI integration.')
+@section('meta_description', 'Explore WebIgnitors services across eCommerce, ERP, CRM, HRM, complex web applications, mobile apps, digital marketing, and AI automation.')
 
 @section('content')
 <header class="page-hero">
     <div class="container">
         <div class="breadcrumb-mini"><a href="{{ route('home') }}">Home</a> / <span>Services</span></div>
         <h1 class="page-title">From first click<br>to <span class="text-coral">full momentum.</span></h1>
-        <p class="page-lead">We connect strategy, creative, technology, and growth so every part of your digital business pulls in the same direction.</p>
+        <p class="page-lead">We connect strategy, creative, technology, automation, and growth so every part of your business pulls in the same direction.</p>
     </div>
 </header>
 
@@ -21,7 +21,7 @@
                     <span class="shape-code" aria-hidden="true">&lt;/&gt;</span>
                     <div class="service-icon"><i class="bi bi-window-stack"></i></div>
                     <h3>Websites & web platforms</h3>
-                    <p>Marketing websites, e-commerce, Laravel applications, SaaS products, APIs, portals, and ongoing optimization.</p>
+                    <p>Marketing websites, eCommerce, ERP, CRM, HRM, complex Laravel applications, SaaS products, APIs, portals, and ongoing optimization.</p>
                     <span class="link-arrow">See web capabilities <i class="bi bi-arrow-up-right"></i></span>
                 </a>
             </div>
@@ -55,6 +55,39 @@
                     <span class="link-arrow">See AI capabilities <i class="bi bi-arrow-up-right"></i></span>
                 </a>
             </div>
+        </div>
+    </div>
+</section>
+
+<section class="systems-speciality systems-speciality-services section-space">
+    <div class="systems-atmosphere" aria-hidden="true">
+        <span class="systems-ring systems-ring-one" data-parallax="-0.06"></span>
+        <span class="systems-ghost" data-parallax="0.025">SYSTEMS</span>
+    </div>
+    <div class="container position-relative">
+        <div class="row align-items-end g-4 mb-5">
+            <div class="col-lg-8 reveal">
+                <span class="section-label text-white">Business platforms</span>
+                <h2 class="systems-heading">Where operations meet automation.</h2>
+            </div>
+            <div class="col-lg-4 reveal">
+                <p class="systems-copy">Our model is simple: understand how your business creates value, then use connected software and automation to help it perform at its best.</p>
+            </div>
+        </div>
+        <div class="systems-service-strip reveal">
+            @foreach ([
+                ['01', 'eCommerce', 'Storefronts, marketplaces & operations'],
+                ['02', 'ERP', 'Resources, finance & inventory'],
+                ['03', 'CRM', 'Sales, service & customer intelligence'],
+                ['04', 'HRM', 'People, payroll & performance'],
+                ['05', 'Complex apps', 'Portals, SaaS & custom workflows'],
+            ] as [$number, $title, $copy])
+                <article>
+                    <span>{{ $number }}</span>
+                    <h3>{{ $title }}</h3>
+                    <p>{{ $copy }}</p>
+                </article>
+            @endforeach
         </div>
     </div>
 </section>
@@ -99,7 +132,7 @@
             </div>
         </div>
         <div class="capability-list reveal">
-            @foreach (['Product strategy', 'UX research', 'Brand systems', 'UX/UI design', 'Laravel', 'React & Vue', 'Shopify', 'iOS', 'Android', 'Flutter', 'API design', 'Cloud infrastructure', 'Technical SEO', 'Paid media', 'Analytics', 'Conversion testing', 'OpenAI integration', 'RAG systems', 'Workflow automation', 'Ongoing support'] as $capability)
+            @foreach (['Product strategy', 'UX research', 'Brand systems', 'UX/UI design', 'Laravel', 'eCommerce', 'ERP systems', 'CRM platforms', 'HRM software', 'Complex web apps', 'React & Vue', 'Shopify', 'iOS', 'Android', 'Flutter', 'API design', 'Cloud infrastructure', 'Technical SEO', 'Paid media', 'Analytics', 'OpenAI integration', 'RAG systems', 'Workflow automation', 'Ongoing support'] as $capability)
                 <span>{{ $capability }}</span>
             @endforeach
         </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Creative Development & Growth Agency')
-@section('meta_description', 'WebIgnitors combines web and mobile development, digital marketing, and AI integration to turn ambitious ideas into measurable growth.')
+@section('meta_description', 'WebIgnitors builds eCommerce, ERP, CRM, HRM, complex web applications, mobile products, marketing systems, and AI automation for measurable business growth.')
 
 @section('content')
 <section class="hero">
@@ -26,7 +26,7 @@
                     <span class="hero-outline">digital</span> <span class="scribble">momentum.</span>
                 </h1>
                 <p class="hero-lead">
-                    High-voltage websites, iOS & Android products, growth systems, and useful AI—created to make ambitious businesses impossible to scroll past.
+                    High-voltage websites, business platforms, iOS & Android products, growth systems, and useful AI—built to unlock more of your business through automation.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
                     <a class="btn btn-ink" href="{{ route('contact') }}" data-magnetic>
@@ -87,7 +87,7 @@
 
 <div class="marquee-strip" aria-hidden="true">
     <div class="marquee-track">
-        @foreach (['Web experiences', 'Mobile products', 'AI workflows', 'Growth engines', 'Brand systems', 'Web experiences', 'Mobile products', 'AI workflows', 'Growth engines', 'Brand systems'] as $item)
+        @foreach (['Web experiences', 'eCommerce', 'ERP & CRM', 'Mobile products', 'AI automation', 'HRM systems', 'Complex web apps', 'Growth engines', 'Web experiences', 'eCommerce', 'ERP & CRM', 'AI automation'] as $item)
             <span>{{ $item }}</span>
         @endforeach
     </div>
@@ -165,7 +165,7 @@
                     <span class="shape-code" aria-hidden="true">&lt;/&gt;</span>
                     <div class="service-icon"><i class="bi bi-window"></i></div>
                     <h3>Websites & web platforms</h3>
-                    <p>Fast, accessible digital experiences—from expressive marketing sites to serious Laravel and SaaS platforms.</p>
+                    <p>Fast, accessible digital experiences—from expressive marketing sites to eCommerce, ERP, CRM, HRM, and complex Laravel platforms.</p>
                     <span class="link-arrow">Explore web development <i class="bi bi-arrow-up-right"></i></span>
                 </a>
             </div>
@@ -198,6 +198,68 @@
                     <p>Automations, copilots, search, and smart workflows designed around your real team—not a trend deck.</p>
                     <span class="link-arrow">Explore AI integration <i class="bi bi-arrow-up-right"></i></span>
                 </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="systems-speciality section-space">
+    <div class="systems-atmosphere" aria-hidden="true">
+        <span class="systems-ring systems-ring-one" data-parallax="-0.06"></span>
+        <span class="systems-ring systems-ring-two" data-parallax="0.045"></span>
+        <span class="systems-ghost" data-parallax="0.025">AUTOMATE</span>
+    </div>
+    <div class="container position-relative">
+        <div class="row g-5 align-items-start">
+            <div class="col-lg-5">
+                <div class="systems-intro reveal">
+                    <span class="section-label text-white">Our speciality</span>
+                    <h2>Serious systems for businesses ready to move.</h2>
+                    <p>We design and engineer the operational platforms behind modern businesses—from the storefront customers see to the systems your team runs every day.</p>
+                    <div class="automation-manifesto">
+                        <span>Our model</span>
+                        <strong>Get the best from your business through thoughtful automation.</strong>
+                    </div>
+                    <a class="btn btn-lime mt-4" href="{{ route('contact') }}" data-magnetic>
+                        Automate your business <i class="bi bi-arrow-up-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="systems-grid">
+                    <article class="system-card system-card-coral reveal" data-tilt>
+                        <span class="system-index">01</span>
+                        <i class="bi bi-bag-check" aria-hidden="true"></i>
+                        <h3>eCommerce</h3>
+                        <p>Custom storefronts, marketplaces, subscriptions, payments, inventory, and fulfilment integrations.</p>
+                    </article>
+                    <article class="system-card system-card-lime reveal" data-tilt>
+                        <span class="system-index">02</span>
+                        <i class="bi bi-diagram-3" aria-hidden="true"></i>
+                        <h3>ERP</h3>
+                        <p>Connected operations across finance, inventory, purchasing, production, reporting, and approvals.</p>
+                    </article>
+                    <article class="system-card system-card-violet reveal" data-tilt>
+                        <span class="system-index">03</span>
+                        <i class="bi bi-people" aria-hidden="true"></i>
+                        <h3>CRM</h3>
+                        <p>Lead pipelines, customer intelligence, sales automation, service workflows, and useful dashboards.</p>
+                    </article>
+                    <article class="system-card reveal" data-tilt>
+                        <span class="system-index">04</span>
+                        <i class="bi bi-person-badge" aria-hidden="true"></i>
+                        <h3>HRM</h3>
+                        <p>Employee records, attendance, leave, payroll workflows, recruitment, and performance systems.</p>
+                    </article>
+                    <article class="system-card system-card-wide reveal" data-tilt>
+                        <span class="system-index">05</span>
+                        <div>
+                            <i class="bi bi-braces-asterisk" aria-hidden="true"></i>
+                            <h3>Complex web applications</h3>
+                        </div>
+                        <p>Secure, scalable Laravel applications, portals, SaaS products, APIs, and tailored workflow engines built around the way your business actually works.</p>
+                    </article>
+                </div>
             </div>
         </div>
     </div>

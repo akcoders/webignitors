@@ -27,7 +27,7 @@ class StoreInquiryRequest extends FormRequest
             'email' => ['required', 'email:rfc', 'max:150'],
             'phone' => ['nullable', 'string', 'max:30'],
             'company' => ['nullable', 'string', 'max:120'],
-            'service' => ['required', 'in:web-development,mobile-apps,digital-marketing,ai-integration,product-strategy,other'],
+            'service' => ['required', 'in:web-development,ecommerce,erp,crm,hrm,complex-web-application,business-automation,mobile-apps,digital-marketing,ai-integration,product-strategy,other'],
             'budget' => ['required', 'in:under-5k,5k-15k,15k-40k,40k-plus,not-sure'],
             'message' => ['required', 'string', 'min:20', 'max:3000'],
             'website' => ['nullable', 'string', 'max:0'],

@@ -42,7 +42,7 @@ class WebsiteTest extends TestCase
             'email' => 'taylor@laravel.com',
             'phone' => '+1 555 0182',
             'company' => 'Northwind Studio',
-            'service' => 'web-development',
+            'service' => 'erp',
             'budget' => '15k-40k',
             'message' => 'We need a new product website and a secure customer portal this quarter.',
             'website' => '',
@@ -55,7 +55,7 @@ class WebsiteTest extends TestCase
         $this->assertDatabaseHas('inquiries', [
             'name' => 'Anuj Shukla',
             'email' => 'taylor@laravel.com',
-            'service' => 'web-development',
+            'service' => 'erp',
             'budget' => '15k-40k',
         ]);
 

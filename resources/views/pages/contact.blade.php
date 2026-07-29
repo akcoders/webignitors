@@ -76,6 +76,12 @@
                                     <option value="">Choose a service</option>
                                     @foreach ([
                                         'web-development' => 'Web development',
+                                        'ecommerce' => 'eCommerce platform',
+                                        'erp' => 'ERP system',
+                                        'crm' => 'CRM platform',
+                                        'hrm' => 'HRM software',
+                                        'complex-web-application' => 'Complex web application',
+                                        'business-automation' => 'Business automation',
                                         'mobile-apps' => 'iOS & Android app',
                                         'digital-marketing' => 'Digital marketing',
                                         'ai-integration' => 'AI integration',

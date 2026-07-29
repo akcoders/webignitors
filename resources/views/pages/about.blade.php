@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'About')
-@section('meta_description', 'Meet WebIgnitors, a senior digital studio where strategy, design, engineering, AI, and growth work as one.')
+@section('meta_description', 'Meet WebIgnitors, an automation-led digital studio specialising in eCommerce, ERP, CRM, HRM, complex applications, mobile, AI, and growth.')
 
 @section('content')
 <header class="page-hero">
@@ -25,7 +25,7 @@
                 <span class="section-label">Our story</span>
                 <h2 class="section-title fs-1">Born from a healthy impatience with forgettable digital work.</h2>
                 <p class="text-soft">WebIgnitors started with a simple frustration: ambitious companies were choosing between beautiful work that did not perform and performant work nobody remembered.</p>
-                <p class="text-soft">So we built the studio we wanted to hire—senior, cross-functional, candid, and focused on outcomes. Today we partner with teams from first idea to growth stage, turning complicated challenges into clear and useful digital products.</p>
+                <p class="text-soft">So we built the studio we wanted to hire—senior, cross-functional, candid, and focused on outcomes. Today we partner with teams from first idea to growth stage, turning complicated challenges into useful digital products and automating the work that holds businesses back.</p>
                 <p class="mb-0 fw-semibold">We stay intentionally compact. The people in the room are the people doing the work.</p>
             </div>
         </div>
