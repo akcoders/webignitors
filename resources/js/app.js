@@ -191,3 +191,66 @@ if (inquiryForm) {
         }
     });
 }
+
+document.querySelectorAll('.audit-url-form, .dashboard-audit-form').forEach((form) => {
+    form.addEventListener('submit', () => {
+        const button = form.querySelector('button[type="submit"]');
+
+        if (button) {
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Starting analysis…';
+        }
+    });
+});
+
+const reportProgress = document.querySelector('[data-report-status-url]');
+
+if (reportProgress) {
+    const stage = reportProgress.querySelector('[data-report-stage]');
+    const percentage = reportProgress.querySelector('[data-report-percent]');
+    const progress = reportProgress.querySelector('[data-report-progress]');
+    let consecutiveFailures = 0;
+
+    const refreshReportStatus = async () => {
+        try {
+            const response = await fetch(reportProgress.dataset.reportStatusUrl, {
+                credentials: 'same-origin',
+                headers: {
+                    Accept: 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Report status request failed with ${response.status}`);
+            }
+
+            const result = await response.json();
+            consecutiveFailures = 0;
+
+            if (stage && result.stage) {
+                stage.textContent = result.stage;
+            }
+
+            const value = Math.max(0, Math.min(100, Number(result.progress) || 0));
+            if (percentage) {
+                percentage.textContent = `${value}%`;
+            }
+            if (progress) {
+                progress.style.width = `${value}%`;
+            }
+
+            if (result.completed || result.failed) {
+                window.location.reload();
+                return;
+            }
+
+            window.setTimeout(refreshReportStatus, document.hidden ? 10000 : 4000);
+        } catch {
+            consecutiveFailures += 1;
+            window.setTimeout(refreshReportStatus, Math.min(30000, 4000 * consecutiveFailures));
+        }
+    };
+
+    window.setTimeout(refreshReportStatus, 1500);
+}

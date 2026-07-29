@@ -15,6 +15,7 @@
                 <a href="{{ route('services') }}">Services</a>
                 <a href="{{ route('work') }}">Work</a>
                 <a href="{{ route('process') }}">Process</a>
+                <a href="{{ route('audit.create') }}">Website audit</a>
             </div>
             <div class="col-6 col-lg-2 footer-nav">
                 <h6>Services</h6>
@@ -28,6 +29,11 @@
                 <a href="mailto:info@webignitors.in">info@webignitors.in</a>
                 <a href="tel:+918261973645">+91 82619 73645</a>
                 <a href="{{ route('contact') }}">Project inquiry</a>
+                @auth
+                    <a href="{{ route('dashboard') }}">My reports</a>
+                @else
+                    <a href="{{ route('login') }}">Client sign in</a>
+                @endauth
             </div>
         </div>
 

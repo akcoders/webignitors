@@ -11,7 +11,7 @@ class WebsiteTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_all_ten_public_pages_are_available(): void
+    public function test_all_public_pages_are_available(): void
     {
         $pages = [
             '/',
@@ -24,6 +24,7 @@ class WebsiteTest extends TestCase
             '/work',
             '/process',
             '/contact',
+            '/website-audit',
         ];
 
         foreach ($pages as $page) {

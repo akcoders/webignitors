@@ -33,11 +33,29 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('process') ? 'active' : '' }}" href="{{ route('process') }}">Process</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-audit-link {{ request()->routeIs('audit.*') ? 'active' : '' }}" href="{{ route('audit.create') }}">
+                            Website audit <span>Free</span>
+                        </a>
+                    </li>
+                    @auth
+                        <li class="nav-item d-lg-none">
+                            <a class="nav-link {{ request()->routeIs('dashboard', 'reports.*') ? 'active' : '' }}" href="{{ route('dashboard') }}">My reports</a>
+                        </li>
+                    @else
+                        <li class="nav-item d-lg-none">
+                            <a class="nav-link {{ request()->routeIs('login', 'register') ? 'active' : '' }}" href="{{ route('login') }}">Sign in</a>
+                        </li>
+                    @endauth
                 </ul>
 
-                <span class="nav-status d-none d-xl-inline-flex">
-                    <span></span> Available
-                </span>
+                @auth
+                    <a class="nav-account d-none d-lg-inline-flex" href="{{ route('dashboard') }}">
+                        <i class="bi bi-grid"></i> Reports
+                    </a>
+                @else
+                    <a class="nav-account d-none d-lg-inline-flex" href="{{ route('login') }}">Sign in</a>
+                @endauth
                 <a class="btn btn-ink" href="{{ route('contact') }}">
                     Start a project <i class="bi bi-arrow-up-right"></i>
                 </a>

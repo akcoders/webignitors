@@ -27,6 +27,7 @@
     @include('partials.nav')
 
     <main id="main-content" class="page-shell">
+        @include('partials.flash')
         @yield('content')
     </main>
 
