@@ -24,7 +24,7 @@ class StoreInquiryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:2', 'max:100'],
-            'email' => ['required', 'email:rfc,dns', 'max:150'],
+            'email' => ['required', 'email:rfc', 'max:150'],
             'phone' => ['nullable', 'string', 'max:30'],
             'company' => ['nullable', 'string', 'max:120'],
             'service' => ['required', 'in:web-development,mobile-apps,digital-marketing,ai-integration,product-strategy,other'],
