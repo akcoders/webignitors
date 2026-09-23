@@ -6242,3 +6242,209 @@ body::after {
         animation: none;
     }
 }
+
+/* Admin overrides are kept last so Bootstrap's responsive offcanvas cannot
+   make the fixed desktop navigation transparent. */
+@media (min-width: 992px) {
+    .admin-sidebar.offcanvas-lg {
+        border-right: 1px solid rgba(255, 255, 255, .08);
+        background-color: #111715 !important;
+        box-shadow: 18px 0 50px rgba(17, 23, 21, .08);
+    }
+}
+
+.admin-sidebar {
+    overflow-y: auto;
+}
+
+.admin-main {
+    background-image:
+        linear-gradient(rgba(17, 23, 21, .025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(17, 23, 21, .025) 1px, transparent 1px);
+    background-size: 48px 48px;
+}
+
+.admin-mail-panel {
+    display: grid;
+    grid-template-columns: minmax(260px, .8fr) minmax(360px, 1.2fr);
+    gap: 1.2rem 2rem;
+    align-items: center;
+    padding: 1.4rem;
+    border: 1px solid rgba(116, 92, 255, .22);
+    border-radius: 1.25rem;
+    background:
+        radial-gradient(circle at 0 0, rgba(116, 92, 255, .11), transparent 18rem),
+        rgba(255, 255, 255, .9);
+    box-shadow: 0 15px 40px rgba(17, 23, 21, .035);
+}
+
+.admin-mail-copy {
+    display: flex;
+    gap: .9rem;
+    align-items: center;
+}
+
+.admin-mail-icon {
+    display: grid;
+    flex: 0 0 auto;
+    width: 3.2rem;
+    height: 3.2rem;
+    place-items: center;
+    border-radius: 1rem;
+    color: #fff;
+    background: var(--violet);
+    box-shadow: 0 10px 25px rgba(116, 92, 255, .22);
+    font-size: 1.25rem;
+}
+
+.admin-mail-copy h2 {
+    margin: .15rem 0 .25rem;
+    font-size: 1.25rem;
+}
+
+.admin-mail-copy p {
+    max-width: 460px;
+    margin: 0;
+    color: #747c78;
+    font-size: .7rem;
+}
+
+.admin-mail-settings {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid rgba(17, 23, 21, .08);
+    border-radius: .85rem;
+    background: #f4f5f2;
+}
+
+.admin-mail-settings span {
+    min-width: 0;
+    padding: .65rem .75rem;
+    border-right: 1px solid rgba(17, 23, 21, .08);
+}
+
+.admin-mail-settings span:last-child {
+    border-right: 0;
+}
+
+.admin-mail-settings small,
+.admin-mail-settings strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-mail-settings small {
+    color: #8a918d;
+    font-size: .52rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.admin-mail-settings strong {
+    margin-top: .12rem;
+    font-size: .65rem;
+}
+
+.admin-mail-settings .is-ready { color: #21865d; }
+.admin-mail-settings .is-missing { color: #cc4e32; }
+
+.admin-mail-form {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .7rem;
+    align-items: end;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(17, 23, 21, .08);
+}
+
+.admin-mail-form label {
+    display: block;
+    margin-bottom: .35rem;
+    color: #6c746f;
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.admin-mail-form input {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .65rem .85rem;
+    border: 1px solid rgba(17, 23, 21, .14);
+    border-radius: .75rem;
+    outline: 0;
+    background: #fff;
+    font-size: .76rem;
+}
+
+.admin-mail-form input:focus {
+    border-color: var(--violet);
+    box-shadow: 0 0 0 .2rem rgba(116, 92, 255, .11);
+}
+
+.admin-mail-form button {
+    min-height: 2.75rem;
+    padding: .65rem 1rem;
+    border: 0;
+    border-radius: .75rem;
+    color: #fff;
+    background: var(--ink);
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+.admin-mail-form button:hover {
+    color: var(--ink);
+    background: var(--lime);
+}
+
+.admin-mail-result {
+    display: flex;
+    grid-column: 1 / -1;
+    gap: .75rem;
+    padding: .85rem 1rem;
+    border-radius: .8rem;
+    font-size: .7rem;
+}
+
+.admin-mail-result.is-success { color: #176b49; background: rgba(66, 184, 131, .12); }
+.admin-mail-result.is-error { color: #a63e27; background: rgba(255, 107, 74, .12); }
+.admin-mail-result > i { margin-top: .1rem; font-size: 1.1rem; }
+.admin-mail-result p { margin: .1rem 0 0; }
+.admin-mail-result code { display: block; margin-top: .45rem; color: inherit; font-size: .61rem; white-space: normal; }
+
+@media (max-width: 1199.98px) {
+    .admin-mail-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-mail-settings,
+    .admin-mail-form,
+    .admin-mail-result {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-mail-settings {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-mail-settings span {
+        border-bottom: 1px solid rgba(17, 23, 21, .08);
+    }
+
+    .admin-mail-form {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-mail-form button {
+        width: 100%;
+    }
+}

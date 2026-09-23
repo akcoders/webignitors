@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use App\Mail\AdminMailDiagnostic;
 use App\Models\Inquiry;
 use App\Models\User;
 use App\Models\WebsiteReport;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -36,6 +38,8 @@ class AdminAuthenticationTest extends TestCase
 
     public function test_administrator_can_sign_in_and_see_operational_data(): void
     {
+        Mail::fake();
+
         $admin = User::factory()->create([
             'name' => 'Anuj Shukla',
             'email' => 'admin@webignitors.in',
@@ -75,6 +79,12 @@ class AdminAuthenticationTest extends TestCase
             ->assertSee('The audit worker needs attention.');
 
         $this->get(route('reports.show', $report))->assertOk();
+
+        $this->post(route('admin.mail.test'), [
+            'email' => 'delivery@example.com',
+        ])->assertSessionHas('mail_diagnostic', fn (array $result): bool => $result['success']);
+
+        Mail::assertSent(AdminMailDiagnostic::class, fn (AdminMailDiagnostic $mail): bool => $mail->hasTo('delivery@example.com'));
     }
 
     public function test_admin_create_command_creates_a_verified_administrator(): void

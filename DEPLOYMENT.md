@@ -85,17 +85,20 @@ password:
 
 ```dotenv
 MAIL_MAILER=smtp
-MAIL_SCHEME=tls
+MAIL_SCHEME=smtp
 MAIL_HOST=smtp.hostinger.com
 MAIL_PORT=587
+MAIL_TIMEOUT=20
 MAIL_USERNAME=info@webignitors.in
 MAIL_PASSWORD="YOUR_MAILBOX_PASSWORD"
 MAIL_FROM_ADDRESS=info@webignitors.in
 MAIL_FROM_NAME="WebIgnitors"
 ```
 
-Hostinger also supports SSL on port 465. The 587/TLS combination above avoids
-confusing implicit SSL with STARTTLS. Quote the password when it contains spaces,
+Hostinger also supports implicit SSL on port 465; use `MAIL_SCHEME=smtps` for
+that combination. Port 587 uses `MAIL_SCHEME=smtp`, and the mailer negotiates
+STARTTLS automatically. Do not use `MAIL_SCHEME=tls`: `tls` is not a supported
+Symfony Mailer transport scheme. Quote the password when it contains spaces,
 `#`, `$` or other characters that `.env` may interpret.
 
 ## Queue worker on shared hosting

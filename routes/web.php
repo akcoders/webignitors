@@ -36,6 +36,9 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
     Route::middleware('admin')->group(function (): void {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
+        Route::post('/mail/test', [AdminDashboardController::class, 'mailTest'])
+            ->middleware('throttle:3,1,admin-mail-test:')
+            ->name('mail.test');
         Route::post('/logout', [AdminSessionController::class, 'destroy'])->name('logout');
     });
 });

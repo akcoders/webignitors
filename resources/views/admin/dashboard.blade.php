@@ -63,6 +63,47 @@
         </div>
     </section>
 
+    <section class="admin-mail-panel">
+        <div class="admin-mail-copy">
+            <div class="admin-mail-icon"><i class="bi bi-envelope-check"></i></div>
+            <div>
+                <span class="admin-panel-label">Email delivery</span>
+                <h2>SMTP connection test</h2>
+                <p>This sends immediately through the effective production configuration—without using the queue.</p>
+            </div>
+        </div>
+
+        <div class="admin-mail-settings" aria-label="Effective mail configuration">
+            <span><small>Mailer</small><strong>{{ $mailConfig['mailer'] }}</strong></span>
+            <span><small>Server</small><strong>{{ $mailConfig['host'] }}:{{ $mailConfig['port'] }}</strong></span>
+            <span><small>Scheme</small><strong>{{ $mailConfig['scheme'] }}</strong></span>
+            <span><small>Credentials</small><strong class="{{ $mailConfig['username'] && $mailConfig['password_set'] ? 'is-ready' : 'is-missing' }}">{{ $mailConfig['username'] && $mailConfig['password_set'] ? 'Configured' : 'Incomplete' }}</strong></span>
+            <span><small>From</small><strong>{{ $mailConfig['from'] }}</strong></span>
+        </div>
+
+        @if (session('mail_diagnostic'))
+            @php($mailResult = session('mail_diagnostic'))
+            <div class="admin-mail-result {{ $mailResult['success'] ? 'is-success' : 'is-error' }}" role="status">
+                <i class="bi {{ $mailResult['success'] ? 'bi-check-circle' : 'bi-x-octagon' }}"></i>
+                <div>
+                    <strong>{{ $mailResult['success'] ? 'SMTP test accepted' : 'SMTP test failed' }}</strong>
+                    <p>{{ $mailResult['message'] }}</p>
+                    @if (! empty($mailResult['detail']))<code>{{ $mailResult['detail'] }}</code>@endif
+                </div>
+            </div>
+        @endif
+
+        <form class="admin-mail-form" method="POST" action="{{ route('admin.mail.test') }}">
+            @csrf
+            <div>
+                <label for="mail-test-email">Deliver test message to</label>
+                <input id="mail-test-email" name="email" type="email" value="{{ old('email', auth()->user()->email) }}" required>
+                @error('email')<small class="text-danger">{{ $message }}</small>@enderror
+            </div>
+            <button type="submit"><i class="bi bi-send"></i> Send live test</button>
+        </form>
+    </section>
+
     <section class="admin-panel" id="reports">
         <div class="admin-panel-head">
             <div><span class="admin-panel-label">Audit operations</span><h2>Recent reports</h2></div>
