@@ -77,7 +77,7 @@
     <div class="container">
         <div class="row align-items-end mb-5 g-4">
             <div class="col-lg-8 reveal">
-                <span class="section-label">The crew</span>
+                <span class="section-label">The team</span>
                 <h2 class="section-title mb-0">Meet the people behind the spark.</h2>
             </div>
             <div class="col-lg-4 reveal">
@@ -85,8 +85,8 @@
             </div>
         </div>
 
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3 reveal">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-5 g-4">
+            <div class="col reveal">
                 <article class="team-card team-violet">
                     <figure class="team-portrait mb-0">
                         <img src="{{ asset('images/team/anuj-shukla.jpg') }}" alt="Anuj Shukla, Co-founder of WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
@@ -98,7 +98,7 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-6 col-lg-3 reveal">
+            <div class="col reveal">
                 <article class="team-card team-coral">
                     <figure class="team-portrait mb-0">
                         <img src="{{ asset('images/team/nilesh-dubey.jpg') }}" alt="Nilesh Dubey, Co-founder of WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
@@ -110,27 +110,39 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-6 col-lg-3 reveal">
+            <div class="col reveal">
                 <article class="team-card">
                     <figure class="team-portrait mb-0">
-                        <img src="{{ asset('images/team/ayush-shukla.jpg') }}" alt="Ayush Shukla, mobile apps and product delivery specialist at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                        <img src="{{ asset('images/team/ayush-shukla.jpg') }}" alt="Ayush Shukla, Senior Developer at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
                     </figure>
                     <div class="team-details">
-                        <span class="team-badge">Crew</span>
+                        <span class="team-badge">Senior Developer</span>
                         <h4>Ayush Shukla</h4>
-                        <p>Mobile apps & product delivery</p>
+                        <p>Applications, mobile & product delivery</p>
                     </div>
                 </article>
             </div>
-            <div class="col-md-6 col-lg-3 reveal">
+            <div class="col reveal">
                 <article class="team-card team-violet">
                     <figure class="team-portrait mb-0">
-                        <img src="{{ asset('images/team/vikash-shukla.jpg') }}" alt="Vikash Shukla, digital marketing and growth specialist at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                        <img src="{{ asset('images/team/vikash-shukla.jpg') }}" alt="Vikash Shukla, Marketing Head at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
                     </figure>
                     <div class="team-details">
-                        <span class="team-badge">Crew</span>
+                        <span class="team-badge">Marketing Head</span>
                         <h4>Vikash Shukla</h4>
-                        <p>Digital marketing & growth</p>
+                        <p>Marketing strategy, brand & growth</p>
+                    </div>
+                </article>
+            </div>
+            <div class="col reveal">
+                <article class="team-card team-coral">
+                    <figure class="team-portrait mb-0">
+                        <img src="{{ asset('images/team/shubhechha-gawade.jpg') }}" alt="Shubhechha Gawade, Marketing Expert at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                    </figure>
+                    <div class="team-details">
+                        <span class="team-badge">Marketing Expert</span>
+                        <h4>Shubhechha Gawade</h4>
+                        <p>Campaigns, content & customer growth</p>
                     </div>
                 </article>
             </div>
