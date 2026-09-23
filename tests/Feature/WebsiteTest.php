@@ -62,7 +62,7 @@ class WebsiteTest extends TestCase
         ]);
 
         Mail::assertSent(NewInquiryNotification::class, function (NewInquiryNotification $mail) {
-            return $mail->hasTo(config('mail.to.address'))
+            return $mail->hasTo(config('mail.inquiries.address'))
                 && $mail->inquiry->email === 'taylor@laravel.com';
         });
         Mail::assertSent(

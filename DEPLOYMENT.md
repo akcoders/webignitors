@@ -121,10 +121,13 @@ MAIL_FROM_NAME="WebIgnitors"
 ```
 
 `MAIL_FROM_ADDRESS` is the sender shown on outgoing messages. It does not set
-the customer recipient. `MAIL_TO_ADDRESS` is used only for the internal copy of
-a contact inquiry. Contact confirmations go to the email entered in the form,
-while verification, password-reset and report-ready emails go to the address in
-the customer's `users.email` record.
+the customer recipient. `MAIL_TO_ADDRESS` is read through the inquiry-only
+`mail.inquiries.address` setting and is used only for the internal copy of a
+contact inquiry. Never expose it as Laravel's reserved top-level `mail.to`
+setting, because that globally redirects every outgoing email. Contact
+confirmations go to the email entered in the form, while verification,
+password-reset and report-ready emails go to the address in the customer's
+`users.email` record.
 
 Hostinger also supports implicit SSL on port 465; use `MAIL_SCHEME=smtps` for
 that combination. Port 587 uses `MAIL_SCHEME=smtp`, and the mailer negotiates

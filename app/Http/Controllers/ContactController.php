@@ -26,15 +26,15 @@ class ContactController extends Controller
         ]);
 
         try {
-            Mail::to(config('mail.to.address'))->send(new NewInquiryNotification($inquiry));
+            Mail::to(config('mail.inquiries.address'))->send(new NewInquiryNotification($inquiry));
             Log::info('Inquiry notification submitted to the company mailbox.', [
                 'inquiry_id' => $inquiry->id,
-                'recipient' => config('mail.to.address'),
+                'recipient' => config('mail.inquiries.address'),
             ]);
         } catch (\Throwable $exception) {
             Log::warning('Inquiry notification to the company mailbox failed.', [
                 'inquiry_id' => $inquiry->id,
-                'recipient' => config('mail.to.address'),
+                'recipient' => config('mail.inquiries.address'),
                 'error' => $exception->getMessage(),
             ]);
         }

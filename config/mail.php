@@ -121,7 +121,10 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
-    'to' => [
+    // Keep the inquiry recipient outside Laravel's reserved top-level `to`
+    // option. `mail.to` is treated as a global recipient override and would
+    // redirect verification, password-reset and report emails to this address.
+    'inquiries' => [
         'address' => env('MAIL_TO_ADDRESS', 'info@webignitors.in'),
     ],
 
