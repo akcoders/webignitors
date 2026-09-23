@@ -30,9 +30,9 @@ Route::post('/website-audit', [WebsiteAuditController::class, 'store'])
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('throttle:5,1');
+    Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('throttle:registration');
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:5,1');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
     Route::get('/forgot-password', [PasswordResetController::class, 'request'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'email'])

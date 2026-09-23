@@ -203,6 +203,17 @@ document.querySelectorAll('.audit-url-form, .dashboard-audit-form').forEach((for
     });
 });
 
+document.querySelectorAll('.auth-form-panel form').forEach((form) => {
+    form.addEventListener('submit', () => {
+        const button = form.querySelector('button[type="submit"]');
+
+        if (button) {
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Please wait…';
+        }
+    });
+});
+
 const reportProgress = document.querySelector('[data-report-status-url]');
 
 if (reportProgress) {
