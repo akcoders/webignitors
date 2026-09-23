@@ -39,6 +39,7 @@
                         <input class="form-check-input" type="checkbox" name="remember" value="1">
                         <span class="form-check-label">Keep this trusted device signed in</span>
                     </label>
+                    <x-turnstile action="admin_login" />
                     <button class="btn btn-ink w-100" type="submit">Enter control room <i class="bi bi-arrow-right"></i></button>
                 </form>
                 <a class="admin-client-link" href="{{ route('login') }}">Looking for client sign in?</a>

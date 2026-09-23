@@ -1746,6 +1746,47 @@ textarea.form-control {
     }
 }
 
+/* Cloudflare Turnstile */
+.turnstile-field {
+    width: 100%;
+    margin: 0 0 1rem;
+}
+
+.turnstile-field .cf-turnstile {
+    width: 100%;
+}
+
+.turnstile-error,
+.turnstile-unavailable {
+    padding: .55rem .7rem;
+    border-radius: .6rem;
+    margin-top: .45rem;
+    color: #a63e27;
+    background: rgba(255, 107, 74, .12);
+    font-size: .68rem;
+    line-height: 1.45;
+}
+
+.audit-turnstile {
+    max-width: 330px;
+    margin-top: .9rem;
+}
+
+.dashboard-turnstile {
+    grid-column: 1 / -1;
+    max-width: 330px;
+    padding: .15rem .35rem .25rem;
+    margin: 0;
+}
+
+.dashboard-turnstile .turnstile-error,
+.dashboard-turnstile .turnstile-unavailable,
+.audit-turnstile .turnstile-error,
+.audit-turnstile .turnstile-unavailable {
+    color: #ffd5cc;
+    background: rgba(255, 107, 74, .18);
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

@@ -25,6 +25,7 @@
                     <label class="form-label" for="password_confirmation">Confirm password</label>
                     <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" required>
                 </div>
+                <x-turnstile action="reset_password" />
                 <button class="btn btn-ink w-100" type="submit">Update password</button>
             </form>
         </div>

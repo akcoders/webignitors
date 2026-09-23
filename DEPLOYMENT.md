@@ -77,6 +77,31 @@ In Google Cloud, enable both **PageSpeed Insights API** and
 **Chrome UX Report API** on the same project, then create one API key restricted
 to those two APIs. The same key is sufficient for both application settings.
 
+## Bot protection and report allowance
+
+Public contact, audit, registration, login, password-recovery, email-verification
+and administrator-login forms support Cloudflare Turnstile. In Cloudflare, open
+**Turnstile**, create a Managed widget, and allow `webignitors.in` (plus
+`www.webignitors.in` if that hostname is used). Add the generated site key and
+secret key to `.env`, then enable it:
+
+```dotenv
+TURNSTILE_ENABLED=true
+TURNSTILE_SITE_KEY=YOUR_PUBLIC_SITE_KEY
+TURNSTILE_SECRET_KEY=YOUR_PRIVATE_SECRET_KEY
+TURNSTILE_ALLOWED_HOSTNAME=webignitors.in,www.webignitors.in
+TURNSTILE_TIMEOUT=10
+```
+
+Run `php artisan optimize:clear && php artisan optimize` after changing these
+values. Keep the secret key private. The browser widget alone is not trusted;
+every token is verified server-side with Cloudflare and checked against its form
+action and production hostname.
+
+Each user can create one website report in a rolling 24-hour period. This limit
+is enforced inside the report service with a database lock, including audits
+continued through registration or login.
+
 ## Production email
 
 Registration sends an email-verification link. For Hostinger Email, use the full

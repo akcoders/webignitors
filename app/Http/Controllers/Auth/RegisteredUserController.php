@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\DailyReportLimitExceeded;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\WebsiteAudit\WebsiteReportCreator;
@@ -43,8 +44,13 @@ class RegisteredUserController extends Controller
         $request->session()->regenerate();
 
         $report = null;
+        $reportLimitMessage = null;
         if ($url = $request->session()->pull('pending_audit_url')) {
-            $report = $creator->create($user, $url);
+            try {
+                $report = $creator->create($user, $url);
+            } catch (DailyReportLimitExceeded $exception) {
+                $reportLimitMessage = $exception->getMessage();
+            }
         }
 
         $verificationSent = $this->sendRegistrationNotification($user);
@@ -59,6 +65,10 @@ class RegisteredUserController extends Controller
         }
 
         $response = to_route('dashboard')->with('success', 'Your WebIgnitors account is ready.');
+
+        if ($reportLimitMessage) {
+            $response->withErrors(['url' => $reportLimitMessage]);
+        }
 
         return $verificationSent
             ? $response

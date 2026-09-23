@@ -114,6 +114,9 @@
                                 @error('message')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                             <div class="col-12">
+                                <x-turnstile action="contact" />
+                            </div>
+                            <div class="col-12">
                                 <button class="btn btn-ink w-100" type="submit">
                                     Send project brief <i class="bi bi-arrow-up-right"></i>
                                 </button>

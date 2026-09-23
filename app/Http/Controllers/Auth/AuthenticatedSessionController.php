@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\DailyReportLimitExceeded;
 use App\Http\Controllers\Controller;
 use App\Services\WebsiteAudit\WebsiteReportCreator;
 use Illuminate\Http\RedirectResponse;
@@ -50,7 +51,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if ($url = $request->session()->pull('pending_audit_url')) {
-            $report = $creator->create($request->user(), $url);
+            try {
+                $report = $creator->create($request->user(), $url);
+            } catch (DailyReportLimitExceeded $exception) {
+                return to_route('dashboard')
+                    ->withErrors(['url' => $exception->getMessage()])
+                    ->with('status', 'Welcome back. Your pending audit was not started because the daily limit has been reached.');
+            }
 
             return to_route('reports.show', $report)
                 ->with('success', 'Welcome back. Your website audit has started.');

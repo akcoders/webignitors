@@ -22,17 +22,19 @@ Route::view('/work', 'pages.work')->name('work');
 Route::view('/process', 'pages.process')->name('process');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])
-    ->middleware('throttle:5,1,contact:')
+    ->middleware(['throttle:5,1,contact:', 'turnstile:contact'])
     ->name('contact.store');
 
 Route::get('/website-audit', [WebsiteAuditController::class, 'create'])->name('audit.create');
 Route::post('/website-audit', [WebsiteAuditController::class, 'store'])
-    ->middleware('throttle:2,1440,audit:')
+    ->middleware(['throttle:10,1,audit:', 'turnstile:audit'])
     ->name('audit.store');
 
 Route::prefix('admin')->name('admin.')->group(function (): void {
     Route::get('/login', [AdminSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AdminSessionController::class, 'store'])->name('login.store');
+    Route::post('/login', [AdminSessionController::class, 'store'])
+        ->middleware('turnstile:admin_login')
+        ->name('login.store');
 
     Route::middleware('admin')->group(function (): void {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
@@ -45,16 +47,20 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-    Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('throttle:registration');
+    Route::post('/register', [RegisteredUserController::class, 'store'])
+        ->middleware(['throttle:registration', 'turnstile:register']);
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+        ->middleware('turnstile:login');
 
     Route::get('/forgot-password', [PasswordResetController::class, 'request'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'email'])
-        ->middleware('throttle:3,1,password-reset:')
+        ->middleware(['throttle:3,1,password-reset:', 'turnstile:forgot_password'])
         ->name('password.email');
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
-    Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
+    Route::post('/reset-password', [PasswordResetController::class, 'update'])
+        ->middleware('turnstile:reset_password')
+        ->name('password.update');
 });
 
 Route::middleware('auth')->group(function (): void {
@@ -65,7 +71,7 @@ Route::middleware('auth')->group(function (): void {
         ->middleware(['signed', 'throttle:6,1,verification-link:'])
         ->name('verification.verify');
     Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])
-        ->middleware('throttle:6,1,verification-email:')
+        ->middleware(['throttle:6,1,verification-email:', 'turnstile:verification_email'])
         ->name('verification.send');
 
     Route::get('/dashboard', [WebsiteReportController::class, 'index'])->name('dashboard');

@@ -35,6 +35,7 @@
                         <label for="audit-website">Leave this field empty</label>
                         <input id="audit-website" name="website" type="text" tabindex="-1" autocomplete="off">
                     </div>
+                    <x-turnstile action="audit" class="audit-turnstile" />
                     @error('url')<div class="audit-form-error">{{ $message }}</div>@enderror
                     <p class="audit-form-note">
                         <i class="bi bi-shield-check"></i>

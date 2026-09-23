@@ -25,6 +25,7 @@
                 <input id="dashboard-url" name="url" placeholder="https://yourwebsite.com" required>
             </div>
             <button type="submit">Start audit <i class="bi bi-arrow-up-right"></i></button>
+            <x-turnstile action="audit" theme="dark" class="dashboard-turnstile" />
         </form>
         @error('url')<div class="audit-form-error mt-2">{{ $message }}</div>@enderror
     </div>

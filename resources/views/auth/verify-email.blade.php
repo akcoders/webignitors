@@ -14,6 +14,7 @@
             @error('email')<div class="alert alert-danger">{{ $message }}</div>@enderror
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
+                <x-turnstile action="verification_email" />
                 <button class="btn btn-ink w-100" type="submit">Resend verification email</button>
             </form>
             <a class="auth-return" href="{{ route('dashboard') }}">Continue to dashboard</a>

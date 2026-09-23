@@ -50,6 +50,7 @@
                         <label for="register-website">Leave empty</label>
                         <input id="register-website" name="website" tabindex="-1" autocomplete="off">
                     </div>
+                    <x-turnstile action="register" />
                     <button class="btn btn-ink w-100" type="submit">Create account <i class="bi bi-arrow-right"></i></button>
                 </form>
                 <p class="auth-terms">By creating an account, you agree to use the audit only for lawful evaluation of public websites.</p>

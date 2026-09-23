@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\DailyReportLimitExceeded;
 use App\Http\Requests\StoreWebsiteReportRequest;
 use App\Services\WebsiteAudit\SafeWebsiteUrl;
 use App\Services\WebsiteAudit\WebsiteReportCreator;
@@ -31,17 +32,13 @@ class WebsiteAuditController extends Controller
             );
         }
 
-        $activeReports = $request->user()->websiteReports()
-            ->whereIn('status', ['queued', 'processing'])
-            ->count();
-
-        if ($activeReports >= 2) {
+        try {
+            $report = $creator->create($request->user(), $url);
+        } catch (DailyReportLimitExceeded $exception) {
             return back()->withErrors([
-                'url' => 'You already have two reports processing. Please wait for one to finish.',
+                'url' => $exception->getMessage(),
             ])->withInput();
         }
-
-        $report = $creator->create($request->user(), $url);
 
         return to_route('reports.show', $report)
             ->with('success', 'Your audit has started. This page updates automatically.');

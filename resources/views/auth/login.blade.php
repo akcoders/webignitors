@@ -41,6 +41,7 @@
                         <input class="form-check-input" type="checkbox" name="remember" value="1">
                         <span class="form-check-label">Keep me signed in</span>
                     </label>
+                    <x-turnstile action="login" />
                     <button class="btn btn-ink w-100" type="submit">Sign in <i class="bi bi-arrow-right"></i></button>
                 </form>
             </div>

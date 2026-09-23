@@ -90,6 +90,27 @@ class WebsiteAuditTest extends TestCase
             ->assertForbidden();
     }
 
+    public function test_user_can_create_only_one_report_in_a_rolling_day(): void
+    {
+        Queue::fake();
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->post('/website-audit', [
+            'url' => 'https://example.com',
+            'website' => '',
+        ])->assertRedirect();
+
+        $this->actingAs($user)->from('/dashboard')->post('/website-audit', [
+            'url' => 'https://example.org',
+            'website' => '',
+        ])
+            ->assertRedirect('/dashboard')
+            ->assertSessionHasErrors('url');
+
+        $this->assertDatabaseCount('website_reports', 1);
+        Queue::assertPushed(ProcessWebsiteReport::class, 1);
+    }
+
     public function test_registration_and_pending_report_survive_a_mail_transport_failure(): void
     {
         Queue::fake();
