@@ -6,8 +6,10 @@ use App\Jobs\ProcessWebsiteReport;
 use App\Models\User;
 use App\Models\WebsiteReport;
 use App\Services\WebsiteAudit\WebsiteAuditRunner;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Queue;
@@ -86,6 +88,34 @@ class WebsiteAuditTest extends TestCase
         $this->actingAs($otherUser)
             ->get(route('reports.status', $report))
             ->assertForbidden();
+    }
+
+    public function test_registration_and_pending_report_survive_a_mail_transport_failure(): void
+    {
+        Queue::fake();
+        Event::listen(Registered::class, function (): never {
+            throw new \RuntimeException('SMTP connection failed.');
+        });
+
+        $this->withSession(['pending_audit_url' => 'https://example.com/'])
+            ->post('/register', [
+                'name' => 'Mail Failure Customer',
+                'email' => 'mail-failure@example.com',
+                'password' => 'Report1234',
+                'password_confirmation' => 'Report1234',
+                'website' => '',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('success')
+            ->assertSessionHas('status');
+
+        $this->assertAuthenticated();
+        $this->assertDatabaseHas('users', ['email' => 'mail-failure@example.com']);
+        $this->assertDatabaseHas('website_reports', [
+            'requested_url' => 'https://example.com/',
+            'status' => 'queued',
+        ]);
+        Queue::assertPushed(ProcessWebsiteReport::class);
     }
 
     public function test_private_and_local_network_urls_are_rejected(): void

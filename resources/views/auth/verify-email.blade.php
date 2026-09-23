@@ -11,6 +11,7 @@
             <h1>Verify your email.</h1>
             <p>We sent a verification link to <strong>{{ auth()->user()->email }}</strong>. Verification protects your private reports and unlocks PDF downloads.</p>
             @if (session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
+            @error('email')<div class="alert alert-danger">{{ $message }}</div>@enderror
             <form method="POST" action="{{ route('verification.send') }}">
                 @csrf
                 <button class="btn btn-ink w-100" type="submit">Resend verification email</button>

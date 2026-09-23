@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
+use Throwable;
 
 class EmailVerificationController extends Controller
 {
@@ -30,7 +32,18 @@ class EmailVerificationController extends Controller
             return to_route('dashboard');
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        try {
+            $request->user()->sendEmailVerificationNotification();
+        } catch (Throwable $exception) {
+            Log::error('Verification email could not be resent.', [
+                'user_id' => $request->user()->id,
+                'exception' => $exception,
+            ]);
+
+            return back()->withErrors([
+                'email' => 'We could not send the verification email. Please try again after the mail settings are checked.',
+            ]);
+        }
 
         return back()->with('status', 'A fresh verification link has been sent.');
     }

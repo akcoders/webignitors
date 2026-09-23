@@ -58,6 +58,31 @@ is empty. Browserless is optional; Lighthouse provides a final-render screenshot
 fallback. Do not disable `AUDIT_RESOLVE_DNS` in production because it protects the
 server from private-network and loopback URL requests.
 
+In Google Cloud, enable both **PageSpeed Insights API** and
+**Chrome UX Report API** on the same project, then create one API key restricted
+to those two APIs. The same key is sufficient for both application settings.
+
+## Production email
+
+Registration sends an email-verification link. For Hostinger Email, use the full
+mailbox address as the username and the mailbox password—not the hPanel account
+password:
+
+```dotenv
+MAIL_MAILER=smtp
+MAIL_SCHEME=tls
+MAIL_HOST=smtp.hostinger.com
+MAIL_PORT=587
+MAIL_USERNAME=info@webignitors.in
+MAIL_PASSWORD="YOUR_MAILBOX_PASSWORD"
+MAIL_FROM_ADDRESS=info@webignitors.in
+MAIL_FROM_NAME="WebIgnitors"
+```
+
+Hostinger also supports SSL on port 465. The 587/TLS combination above avoids
+confusing implicit SSL with STARTTLS. Quote the password when it contains spaces,
+`#`, `$` or other characters that `.env` may interpret.
+
 ## Queue worker on shared hosting
 
 Website reports run in the database queue so that PageSpeed and validation APIs
@@ -71,6 +96,16 @@ cd /home/u897223014/domains/webignitors.in/public_html && php artisan queue:work
 If the hosting panel needs an absolute PHP binary, use the PHP 8.3 CLI path shown
 by the provider. Never run two persistent workers on a shared-hosting plan; the
 short `--stop-when-empty` command is designed for cron.
+
+Before creating the cron entry, run its worker command once over SSH. A queued
+report should move from `queued` to `processing` and finally `completed`:
+
+```bash
+php artisan queue:work --stop-when-empty --tries=2 --timeout=330 -vvv
+```
+
+The API key does not execute queued reports. If reports remain at “Waiting for
+the audit worker”, the cron/worker is not running.
 
 After deploying, these MySQL tables should exist:
 
@@ -125,3 +160,37 @@ php artisan migrate:status
 Configure the domain document root to the Laravel `public/` directory. If the
 project itself is uploaded to `public_html`, the preferred document root is
 `public_html/public`; the site URL should not contain `/public`.
+
+## Registration or report troubleshooting
+
+Never paste secret values into support messages. These commands show whether
+the required settings are loaded without printing their contents:
+
+```bash
+php artisan optimize:clear
+php artisan tinker --execute="dump([
+    'queue' => config('queue.default'),
+    'pagespeed_key' => filled(config('audit.pagespeed.api_key')) ? 'set' : 'missing',
+    'crux_key' => filled(config('audit.crux.api_key')) ? 'set' : 'missing',
+    'mail_driver' => config('mail.default'),
+    'mail_host' => config('mail.mailers.smtp.host'),
+]);"
+php artisan tinker --execute="dump([
+    'queued_reports' => App\\Models\\WebsiteReport::where('status', 'queued')->count(),
+    'processing_reports' => App\\Models\\WebsiteReport::where('status', 'processing')->count(),
+    'jobs' => Illuminate\\Support\\Facades\\DB::table('jobs')->count(),
+    'failed_jobs' => Illuminate\\Support\\Facades\\DB::table('failed_jobs')->count(),
+]);"
+php artisan queue:failed
+tail -n 100 storage/logs/laravel.log
+```
+
+Interpretation:
+
+- A queued report plus a row in `jobs` means the queue worker/cron has not run.
+- A row in `failed_jobs` means the worker ran but the exception must be fixed;
+  use `php artisan queue:retry all` after correcting it.
+- A user with no report often means registration stopped at email delivery on an
+  older build. Sign in with the registered credentials and submit the URL again.
+- `Connection could not be established with host smtp...` is an email setting
+  issue, not an audit API issue.

@@ -15,7 +15,7 @@ return [
 
     'crux' => [
         'enabled' => env('CRUX_ENABLED', true),
-        'api_key' => env('GOOGLE_CRUX_API_KEY', env('GOOGLE_PAGESPEED_API_KEY')),
+        'api_key' => env('GOOGLE_CRUX_API_KEY') ?: env('GOOGLE_PAGESPEED_API_KEY'),
         'endpoint' => env('CRUX_ENDPOINT', 'https://chromeuxreport.googleapis.com/v1/records:queryRecord'),
     ],
 
