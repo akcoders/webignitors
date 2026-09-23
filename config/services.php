@@ -44,4 +44,8 @@ return [
         'timeout' => (int) env('TURNSTILE_TIMEOUT', 10),
     ],
 
+    'blog_api' => [
+        'token' => env('BLOG_API_TOKEN'),
+    ],
+
 ];

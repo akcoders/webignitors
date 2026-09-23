@@ -64,6 +64,21 @@ php artisan queue:work --tries=2 --timeout=330
 No VPS is required. On shared hosting, run the worker as a once-per-minute cron
 job with `--stop-when-empty`; see `DEPLOYMENT.md`.
 
+## Blog and editorial API
+
+The /blog journal includes 20 production-ready articles about modern software,
+AI applications, ecommerce, ERP/CRM, web performance and automation, each with
+an original local cover image and complete SEO/social metadata. Administrators
+can create, edit, schedule, publish and trash articles from /admin/blogs.
+
+Seed or refresh the prepared editorial set:
+
+    php artisan db:seed --class=BlogPostSeeder
+
+A private token-authenticated API is available for non-AI editorial
+integrations. See BLOG_API.md or /admin/blogs/api-docs. No external AI API is
+configured or required.
+
 ## Quality checks
 
 ```bash

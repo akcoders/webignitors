@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminSessionController;
+use App\Http\Controllers\Admin\BlogPostController as AdminBlogPostController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\WebsiteAuditController;
 use App\Http\Controllers\WebsiteReportController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +23,14 @@ Route::view('/services/digital-marketing', 'pages.services.digital-marketing')->
 Route::view('/services/ai-integration', 'pages.services.ai-integration')->name('services.ai');
 Route::view('/work', 'pages.work')->name('work');
 Route::view('/process', 'pages.process')->name('process');
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', fn () => response(
+    "User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api\nSitemap: ".route('sitemap')."\n",
+    200,
+    ['Content-Type' => 'text/plain']
+))->name('robots');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware(['throttle:5,1,contact:', 'turnstile:contact'])
@@ -38,6 +49,11 @@ Route::prefix('admin')->name('admin.')->group(function (): void {
 
     Route::middleware('admin')->group(function (): void {
         Route::get('/', AdminDashboardController::class)->name('dashboard');
+        Route::get('/blogs/api-docs', [AdminBlogPostController::class, 'apiDocs'])->name('blog.api-docs');
+        Route::resource('/blogs', AdminBlogPostController::class)
+            ->parameters(['blogs' => 'blogPost'])
+            ->except('show')
+            ->names('blog');
         Route::post('/mail/test', [AdminDashboardController::class, 'mailTest'])
             ->middleware('throttle:3,1,admin-mail-test:')
             ->name('mail.test');

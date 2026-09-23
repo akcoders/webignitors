@@ -15,6 +15,7 @@
                 <a href="{{ route('services') }}">Services</a>
                 <a href="{{ route('work') }}">Work</a>
                 <a href="{{ route('process') }}">Process</a>
+                <a href="{{ route('blog.index') }}">Insights</a>
                 <a href="{{ route('audit.create') }}">Website audit</a>
             </div>
             <div class="col-6 col-lg-2 footer-nav">

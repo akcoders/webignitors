@@ -26,6 +26,7 @@ assets, so Composer, Node.js and npm are not required on the destination server.
    ```bash
    php artisan key:generate --force
    php artisan migrate --force
+   php artisan db:seed --class=BlogPostSeeder --force
    php artisan optimize
    ```
 
@@ -49,6 +50,27 @@ Enter and confirm a password of at least 12 characters containing uppercase and
 lowercase letters and numbers. If the email already belongs to a customer, this
 command safely promotes that account and resets its password. Never place an
 administrator password in `.env`, source control or a shell command.
+
+## Blog publishing and SEO
+
+The public journal is available at /blog; administrators manage drafts,
+scheduled articles, images, keywords, canonical URLs, robots settings, social
+previews and schema at /admin/blogs. The production seed command installs the
+20 prepared software and AI articles and their SEO records. It is safe to run
+again: existing seeded slugs are updated instead of duplicated.
+
+The optional editorial API is not an AI integration. It is a private REST API
+for approved external publishing workflows. Generate a token:
+
+    php -r "echo bin2hex(random_bytes(32)), PHP_EOL;"
+
+Add the result to the production environment:
+
+    BLOG_API_TOKEN=PASTE_THE_64_CHARACTER_VALUE
+
+Then run `php artisan config:clear && php artisan config:cache`. Its interactive
+reference is at /admin/blogs/api-docs, and the repository reference is
+BLOG_API.md. Keep this token private and never include it in frontend code.
 
 ## Website audit APIs
 
@@ -173,6 +195,7 @@ website_report_pages
 website_report_findings
 website_audit_api_runs
 inquiries
+blog_posts
 cache
 cache_locks
 ```

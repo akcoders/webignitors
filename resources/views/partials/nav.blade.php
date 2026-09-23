@@ -34,6 +34,9 @@
                         <a class="nav-link {{ request()->routeIs('process') ? 'active' : '' }}" href="{{ route('process') }}">Process</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('blog.*') ? 'active' : '' }}" href="{{ route('blog.index') }}">Insights</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link nav-audit-link {{ request()->routeIs('audit.*') ? 'active' : '' }}" href="{{ route('audit.create') }}">
                             Website audit <span>Free</span>
                         </a>

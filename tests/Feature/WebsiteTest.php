@@ -26,6 +26,7 @@ class WebsiteTest extends TestCase
             '/process',
             '/contact',
             '/website-audit',
+            '/blog',
         ];
 
         foreach ($pages as $page) {
@@ -33,6 +34,19 @@ class WebsiteTest extends TestCase
                 ->assertOk()
                 ->assertSee('WebIgnitors');
         }
+    }
+
+    public function test_search_engine_discovery_files_are_available(): void
+    {
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/xml')
+            ->assertSee(route('blog.index'), false);
+
+        $this->get('/robots.txt')
+            ->assertOk()
+            ->assertHeader('Content-Type', 'text/plain; charset=UTF-8')
+            ->assertSee('Sitemap: '.route('sitemap'), false);
     }
 
     public function test_a_valid_inquiry_is_stored_and_emailed(): void

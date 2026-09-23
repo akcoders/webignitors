@@ -26,10 +26,12 @@
                 <span>WebIgnitors<small>Control room</small></span>
             </a>
             <nav aria-label="Admin navigation">
-                <a class="active" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid-1x2"></i> Overview</a>
+                <a class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid-1x2"></i> Overview</a>
                 <a href="{{ route('admin.dashboard') }}#reports"><i class="bi bi-file-earmark-bar-graph"></i> Reports</a>
                 <a href="{{ route('admin.dashboard') }}#inquiries"><i class="bi bi-chat-square-text"></i> Inquiries</a>
                 <a href="{{ route('admin.dashboard') }}#users"><i class="bi bi-people"></i> Users</a>
+                <a class="{{ request()->routeIs('admin.blog.*') && ! request()->routeIs('admin.blog.api-docs') ? 'active' : '' }}" href="{{ route('admin.blog.index') }}"><i class="bi bi-journal-richtext"></i> Blog</a>
+                <a class="{{ request()->routeIs('admin.blog.api-docs') ? 'active' : '' }}" href="{{ route('admin.blog.api-docs') }}"><i class="bi bi-braces"></i> Blog API</a>
                 <a href="{{ route('home') }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> View website</a>
             </nav>
             <div class="admin-profile">

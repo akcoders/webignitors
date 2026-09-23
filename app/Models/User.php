@@ -23,6 +23,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(WebsiteReport::class);
     }
 
+    public function blogPosts(): HasMany
+    {
+        return $this->hasMany(BlogPost::class, 'author_id');
+    }
+
     /** @return array<string, string> */
     public function routeNotificationForMail(mixed $notification = null): array
     {

@@ -214,6 +214,79 @@ document.querySelectorAll('.auth-form-panel form').forEach((form) => {
     });
 });
 
+document.querySelectorAll('[data-copy-url]').forEach((button) => {
+    button.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(button.dataset.copyUrl);
+            const original = button.innerHTML;
+            button.innerHTML = '<i class="bi bi-check2"></i>';
+            window.setTimeout(() => {
+                button.innerHTML = original;
+            }, 1600);
+        } catch {
+            window.prompt('Copy this link:', button.dataset.copyUrl);
+        }
+    });
+});
+
+const blogEditor = document.querySelector('.blog-editor');
+
+if (blogEditor) {
+    const title = blogEditor.querySelector('#title');
+    const slug = blogEditor.querySelector('[data-slug-target]');
+    const metaTitle = blogEditor.querySelector('#meta_title');
+    const excerpt = blogEditor.querySelector('#excerpt');
+    const metaDescription = blogEditor.querySelector('#meta_description');
+    const previewTitle = blogEditor.querySelector('[data-seo-title]');
+    const previewDescription = blogEditor.querySelector('[data-seo-description]');
+    const previewSlug = blogEditor.querySelector('[data-seo-slug]');
+    const content = blogEditor.querySelector('[data-markdown-content]');
+    let slugWasEdited = Boolean(slug?.value);
+
+    const toSlug = (value) => value
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '')
+        .slice(0, 190);
+
+    const refreshPreview = () => {
+        if (previewTitle) previewTitle.textContent = metaTitle?.value || title?.value || 'Your article title';
+        if (previewDescription) previewDescription.textContent = metaDescription?.value || excerpt?.value || 'Your meta description will appear here. Make the value of the article clear before someone clicks.';
+        if (previewSlug) previewSlug.textContent = slug?.value || 'article-url';
+    };
+
+    title?.addEventListener('input', () => {
+        if (!slugWasEdited && slug) slug.value = toSlug(title.value);
+        refreshPreview();
+    });
+    slug?.addEventListener('input', () => {
+        slugWasEdited = true;
+        slug.value = toSlug(slug.value);
+        refreshPreview();
+    });
+    [metaTitle, excerpt, metaDescription].forEach((field) => field?.addEventListener('input', refreshPreview));
+
+    blogEditor.querySelectorAll('[data-count-input]').forEach((field) => {
+        const counter = blogEditor.querySelector('[data-count-for="' + field.id + '"]');
+        const refreshCount = () => {
+            if (counter) counter.textContent = field.value.length;
+        };
+        field.addEventListener('input', refreshCount);
+        refreshCount();
+    });
+
+    const wordCounter = blogEditor.querySelector('[data-word-count]');
+    const refreshWords = () => {
+        if (!wordCounter || !content) return;
+        wordCounter.textContent = (content.value.trim().match(/\b[\p{L}\p{N}'’-]+\b/gu) || []).length;
+    };
+    content?.addEventListener('input', refreshWords);
+    refreshWords();
+    refreshPreview();
+}
+
 const reportProgress = document.querySelector('[data-report-status-url]');
 
 if (reportProgress) {
