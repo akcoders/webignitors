@@ -88,7 +88,9 @@
         <div class="row g-4">
             <div class="col-md-6 col-lg-3 reveal">
                 <article class="team-card team-violet">
-                    <div class="team-portrait"></div>
+                    <figure class="team-portrait mb-0">
+                        <img src="{{ asset('images/team/anuj-shukla.jpg') }}" alt="Anuj Shukla, Co-founder of WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                    </figure>
                     <div class="team-details">
                         <span class="team-badge">Co-founder</span>
                         <h4>Anuj Shukla</h4>
@@ -98,7 +100,9 @@
             </div>
             <div class="col-md-6 col-lg-3 reveal">
                 <article class="team-card team-coral">
-                    <div class="team-portrait"></div>
+                    <figure class="team-portrait mb-0">
+                        <img src="{{ asset('images/team/nilesh-dubey.jpg') }}" alt="Nilesh Dubey, Co-founder of WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                    </figure>
                     <div class="team-details">
                         <span class="team-badge">Co-founder</span>
                         <h4>Nilesh Dubey</h4>
@@ -108,7 +112,9 @@
             </div>
             <div class="col-md-6 col-lg-3 reveal">
                 <article class="team-card">
-                    <div class="team-portrait"></div>
+                    <figure class="team-portrait mb-0">
+                        <img src="{{ asset('images/team/ayush-shukla.jpg') }}" alt="Ayush Shukla, mobile apps and product delivery specialist at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                    </figure>
                     <div class="team-details">
                         <span class="team-badge">Crew</span>
                         <h4>Ayush Shukla</h4>
@@ -118,7 +124,9 @@
             </div>
             <div class="col-md-6 col-lg-3 reveal">
                 <article class="team-card team-violet">
-                    <div class="team-portrait"></div>
+                    <figure class="team-portrait mb-0">
+                        <img src="{{ asset('images/team/vikash-shukla.jpg') }}" alt="Vikash Shukla, digital marketing and growth specialist at WebIgnitors" width="800" height="1000" loading="lazy" decoding="async">
+                    </figure>
                     <div class="team-details">
                         <span class="team-badge">Crew</span>
                         <h4>Vikash Shukla</h4>
