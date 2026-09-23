@@ -20,12 +20,12 @@ Route::view('/work', 'pages.work')->name('work');
 Route::view('/process', 'pages.process')->name('process');
 Route::get('/contact', [ContactController::class, 'create'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])
-    ->middleware('throttle:5,1')
+    ->middleware('throttle:5,1,contact:')
     ->name('contact.store');
 
 Route::get('/website-audit', [WebsiteAuditController::class, 'create'])->name('audit.create');
 Route::post('/website-audit', [WebsiteAuditController::class, 'store'])
-    ->middleware('throttle:2,1440')
+    ->middleware('throttle:2,1440,audit:')
     ->name('audit.store');
 
 Route::middleware('guest')->group(function (): void {
@@ -36,7 +36,7 @@ Route::middleware('guest')->group(function (): void {
 
     Route::get('/forgot-password', [PasswordResetController::class, 'request'])->name('password.request');
     Route::post('/forgot-password', [PasswordResetController::class, 'email'])
-        ->middleware('throttle:3,1')
+        ->middleware('throttle:3,1,password-reset:')
         ->name('password.email');
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
     Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
@@ -47,16 +47,16 @@ Route::middleware('auth')->group(function (): void {
 
     Route::get('/verify-email', [EmailVerificationController::class, 'notice'])->name('verification.notice');
     Route::get('/verify-email/{id}/{hash}', [EmailVerificationController::class, 'verify'])
-        ->middleware(['signed', 'throttle:6,1'])
+        ->middleware(['signed', 'throttle:6,1,verification-link:'])
         ->name('verification.verify');
     Route::post('/email/verification-notification', [EmailVerificationController::class, 'send'])
-        ->middleware('throttle:6,1')
+        ->middleware('throttle:6,1,verification-email:')
         ->name('verification.send');
 
     Route::get('/dashboard', [WebsiteReportController::class, 'index'])->name('dashboard');
     Route::get('/reports/{report}', [WebsiteReportController::class, 'show'])->name('reports.show');
     Route::get('/reports/{report}/status', [WebsiteReportController::class, 'status'])
-        ->middleware('throttle:60,1')
+        ->middleware('throttle:60,1,report-status:')
         ->name('reports.status');
     Route::get('/reports/{report}/download', [WebsiteReportController::class, 'download'])
         ->name('reports.download');
