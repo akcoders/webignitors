@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Jobs\ProcessWebsiteReport;
 use App\Models\User;
 use App\Models\WebsiteReport;
+use App\Notifications\WebsiteReportReady;
 use App\Services\WebsiteAudit\WebsiteAuditRunner;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -227,6 +228,7 @@ class WebsiteAuditTest extends TestCase
             'status' => 'completed',
         ]);
         $this->assertGreaterThan(5, $report->findings()->count());
+        Notification::assertSentTo($user, WebsiteReportReady::class);
 
         Storage::disk('local')->assertExists($report->pdf_path);
         Storage::disk('local')->assertExists($report->data_path);

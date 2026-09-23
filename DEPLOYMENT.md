@@ -120,6 +120,12 @@ MAIL_FROM_ADDRESS=info@webignitors.in
 MAIL_FROM_NAME="WebIgnitors"
 ```
 
+`MAIL_FROM_ADDRESS` is the sender shown on outgoing messages. It does not set
+the customer recipient. `MAIL_TO_ADDRESS` is used only for the internal copy of
+a contact inquiry. Contact confirmations go to the email entered in the form,
+while verification, password-reset and report-ready emails go to the address in
+the customer's `users.email` record.
+
 Hostinger also supports implicit SSL on port 465; use `MAIL_SCHEME=smtps` for
 that combination. Port 587 uses `MAIL_SCHEME=smtp`, and the mailer negotiates
 STARTTLS automatically. Do not use `MAIL_SCHEME=tls`: `tls` is not a supported

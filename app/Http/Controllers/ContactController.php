@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreInquiryRequest;
+use App\Mail\InquiryReceivedConfirmation;
 use App\Mail\NewInquiryNotification;
 use App\Models\Inquiry;
 use Illuminate\Http\RedirectResponse;
@@ -26,9 +27,28 @@ class ContactController extends Controller
 
         try {
             Mail::to(config('mail.to.address'))->send(new NewInquiryNotification($inquiry));
-        } catch (\Throwable $exception) {
-            Log::warning('Inquiry email delivery failed.', [
+            Log::info('Inquiry notification submitted to the company mailbox.', [
                 'inquiry_id' => $inquiry->id,
+                'recipient' => config('mail.to.address'),
+            ]);
+        } catch (\Throwable $exception) {
+            Log::warning('Inquiry notification to the company mailbox failed.', [
+                'inquiry_id' => $inquiry->id,
+                'recipient' => config('mail.to.address'),
+                'error' => $exception->getMessage(),
+            ]);
+        }
+
+        try {
+            Mail::to($inquiry->email)->send(new InquiryReceivedConfirmation($inquiry));
+            Log::info('Inquiry confirmation submitted to the customer.', [
+                'inquiry_id' => $inquiry->id,
+                'recipient' => $inquiry->email,
+            ]);
+        } catch (\Throwable $exception) {
+            Log::warning('Inquiry confirmation to the customer failed.', [
+                'inquiry_id' => $inquiry->id,
+                'recipient' => $inquiry->email,
                 'error' => $exception->getMessage(),
             ]);
         }

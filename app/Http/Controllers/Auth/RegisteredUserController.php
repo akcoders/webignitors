@@ -79,11 +79,16 @@ class RegisteredUserController extends Controller
     {
         try {
             event(new Registered($user));
+            Log::info('Registration verification email submitted to the user.', [
+                'user_id' => $user->id,
+                'recipient' => $user->email,
+            ]);
 
             return true;
         } catch (Throwable $exception) {
             Log::error('Registration succeeded but the verification notification failed.', [
                 'user_id' => $user->id,
+                'recipient' => $user->email,
                 'exception' => $exception,
             ]);
 

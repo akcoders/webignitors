@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Mail\InquiryReceivedConfirmation;
 use App\Mail\NewInquiryNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -61,8 +62,14 @@ class WebsiteTest extends TestCase
         ]);
 
         Mail::assertSent(NewInquiryNotification::class, function (NewInquiryNotification $mail) {
-            return $mail->inquiry->email === 'taylor@laravel.com';
+            return $mail->hasTo(config('mail.to.address'))
+                && $mail->inquiry->email === 'taylor@laravel.com';
         });
+        Mail::assertSent(
+            InquiryReceivedConfirmation::class,
+            fn (InquiryReceivedConfirmation $mail): bool => $mail->hasTo('taylor@laravel.com')
+        );
+        Mail::assertSentCount(2);
     }
 
     public function test_contact_form_requires_a_complete_valid_brief(): void

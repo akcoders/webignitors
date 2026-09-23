@@ -34,9 +34,14 @@ class EmailVerificationController extends Controller
 
         try {
             $request->user()->sendEmailVerificationNotification();
+            Log::info('Verification email submitted to the user.', [
+                'user_id' => $request->user()->id,
+                'recipient' => $request->user()->email,
+            ]);
         } catch (Throwable $exception) {
             Log::error('Verification email could not be resent.', [
                 'user_id' => $request->user()->id,
+                'recipient' => $request->user()->email,
                 'exception' => $exception,
             ]);
 

@@ -23,6 +23,12 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(WebsiteReport::class);
     }
 
+    /** @return array<string, string> */
+    public function routeNotificationForMail(mixed $notification = null): array
+    {
+        return [$this->email => $this->name];
+    }
+
     /**
      * Get the attributes that should be cast.
      *

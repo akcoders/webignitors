@@ -198,9 +198,14 @@ class WebsiteAuditRunner
 
         try {
             $report->user->notify(new WebsiteReportReady($report->fresh()));
+            Log::info('Website report notification submitted to the user.', [
+                'report_id' => $report->id,
+                'recipient' => $report->user->email,
+            ]);
         } catch (\Throwable $exception) {
             Log::warning('Website report ready email failed.', [
                 'report_id' => $report->id,
+                'recipient' => $report->user->email,
                 'error' => $exception->getMessage(),
             ]);
         }
