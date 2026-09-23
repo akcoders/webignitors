@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminSessionController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\PasswordResetController;
@@ -27,6 +29,16 @@ Route::get('/website-audit', [WebsiteAuditController::class, 'create'])->name('a
 Route::post('/website-audit', [WebsiteAuditController::class, 'store'])
     ->middleware('throttle:2,1440,audit:')
     ->name('audit.store');
+
+Route::prefix('admin')->name('admin.')->group(function (): void {
+    Route::get('/login', [AdminSessionController::class, 'create'])->name('login');
+    Route::post('/login', [AdminSessionController::class, 'store'])->name('login.store');
+
+    Route::middleware('admin')->group(function (): void {
+        Route::get('/', AdminDashboardController::class)->name('dashboard');
+        Route::post('/logout', [AdminSessionController::class, 'destroy'])->name('logout');
+    });
+});
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');

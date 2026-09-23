@@ -89,6 +89,9 @@ class WebsiteReportController extends Controller
 
     private function ensureOwner(Request $request, WebsiteReport $report): void
     {
-        abort_unless($report->user_id === $request->user()->id, 403);
+        abort_unless(
+            $report->user_id === $request->user()->id || $request->user()->is_admin,
+            403
+        );
     }
 }

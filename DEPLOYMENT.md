@@ -30,10 +30,25 @@ assets, so Composer, Node.js and npm are not required on the destination server.
    ```
 
 7. Configure the queue cron job described below.
-8. Open the website and submit one test inquiry. Contact submissions are saved
+8. Create the first administrator as described below.
+9. Open the website and submit one test inquiry. Contact submissions are saved
    in the MySQL `inquiries` table and sent to `MAIL_TO_ADDRESS`.
-9. Register a test account, verify its email, run one website report and confirm
+10. Register a test account, verify its email, run one website report and confirm
    that the private PDF downloads.
+
+## Administrator access
+
+The administrator console is available at `/admin/login`. No default password is
+included. After running the migrations, create the first administrator over SSH:
+
+```bash
+php artisan admin:create info@webignitors.in "Anuj Shukla"
+```
+
+Enter and confirm a password of at least 12 characters containing uppercase and
+lowercase letters and numbers. If the email already belongs to a customer, this
+command safely promotes that account and resets its password. Never place an
+administrator password in `.env`, source control or a shell command.
 
 ## Website audit APIs
 
@@ -124,6 +139,9 @@ inquiries
 cache
 cache_locks
 ```
+
+The `users.is_admin` column is added by migration and defaults to `false`, so
+normal registration can never grant administrator access.
 
 Report JSON, screenshots and PDF files are private in
 `storage/app/private/reports`. Keep the entire `storage` directory writable and
